@@ -1,0 +1,53 @@
+
+1.
+
+A = LOAD '/home/acadgild/pig/Assignments/student.csv' using PigStorage(',') as (name:chararray, undertaken:chararray, dob:chararray, stream:chararray, grade:float, state:chararray, city:chararray);
+
+B = FILTER A BY grade != 'Grade';
+
+C = FILTER B by grade < 5;
+
+D = group C by $0;
+
+E = foreach D generate COUNT(C);
+
+F = group E all;
+
+G = foreach F generate SUM(E.$0);
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+2.
+
+H = FILTER A by state == 'alaska';
+
+I = foreach H generate name;
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+3.
+
+J = FILTER A by undertaken=='goverenment';
+
+K = FILTER J by state=='alabama';
+
+L = group K all;
+
+M = foreach L generate COUNT(K);
+
+dump M;
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+4.
+
+N = filter A by $3 == 'BE';
+
+O = filter N by $5 == 'oregon';
+
+P = foreach O generate name;
+
+dump P;
